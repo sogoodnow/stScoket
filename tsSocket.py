@@ -3,7 +3,7 @@
 from socket import *
 from time import ctime
 
-HOST = ''
+HOST = 'localhost'
 PORT = 21567
 BUFSIZE = 1024
 ADDR = (HOST, PORT)
@@ -15,13 +15,13 @@ tcpSerSock.listen(5)
 while True:
     print 'wait for conneting....'
     tcpCliSock, addr = tcpSerSock.accept()
-    print '...connected fro:', addr
+    print '...connected from:', addr
 
     while True:
-        data = tcpSerSock.recv(BUFSIZE)
+        data = tcpCliSock.recv(BUFSIZE)
         if not data:
             break
-        tcpCliSock.send('[%s]%s' %(ctime(), data))
-        tcpCliSock.close()
+        tcpCliSock.send('[%s]%s' % (ctime(), data))
+    tcpCliSock.close()
     tcpSerSock.close()
 
